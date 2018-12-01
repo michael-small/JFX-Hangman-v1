@@ -12,120 +12,139 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javax.xml.soap.Text;
+import java.util.Arrays;
 
 public class Controller {
 
-
-    public String secretWord = "redrum";
-    public String resetWord = "Reset Game";
+//    TODO: delete this varible once debugging/testing is done. Rely on enterSecretWord functionality in full game.
+    public String secretWord = "wwwwwww";
     @FXML
-    private TextField textfield;
+    private TextField guessField;
     @FXML
     public Label guessedWord;
     @FXML
     private Label guessedLetters;
+    @FXML
+    private TextField secretWordtxtField;
 
     // these are used for images
     public ImageView hangPic = new ImageView();
     public Integer startingPic = 4;
 
-//  Cycles through hangman images
-    public void setImageView() {
+    //  Cycles through hangman images when wrong letter is added
+    public void addHungPart() {
         startingPic++;
         if (startingPic > 10) {
-            String pathEND = new String("/img/gameover.jpg");
-            Image gameOver = new Image(getClass().getResource(pathEND).toExternalForm());
+            String pathLose = "/img/game-over-reminder-1432947_1920.png";
+            Image gameOver = new Image(getClass().getResource(pathLose).toExternalForm());
 //            https://i.ebayimg.com/images/g/w~YAAOSw8HBZHJUZ/s-l300.jpg (source of image)
             hangPic.setImage(gameOver);
+            guessField.setDisable(true);
         }
         else {
 //            https://www.oligalma.com/en/downloads/images/hangman (hangman image set)
-            String path = new String("/img/" + Integer.toString(startingPic) + ".jpg");
+            String path = "/img/" + Integer.toString(startingPic) + ".jpg";
             Image img1 = new Image(getClass().getResource(path).toExternalForm());
             hangPic.setImage(img1);
         }
     }
 
-
-//    Makes one dash per character in secret word
-    public String lines() {
-        StringBuilder size = new StringBuilder();
+//    Converts secretWord to dashes
+    public String dashifySecretWord() {
+        StringBuilder dashedSecretWord = new StringBuilder();
         for (int i = 0; i<secretWord.length(); i++){
-            size.append("_");
+            if(secretWord.substring(i,i+1).equals(" ")) {
+                dashedSecretWord.append(" ");
+            } else {
+                dashedSecretWord.append("_");}
         }
-        return size.toString();
-}
+        return dashedSecretWord.toString();
+    }
 
+//    Checks guessed letter against secret word, letter for letter.
     public String checkGuess(String theGuess){
         String wordSoFar = guessedWord.getText();
-        String thingToReturn = "";
+        StringBuilder thingToReturn = new StringBuilder();
         if (secretWord.contains(theGuess)) {
             for (int i = 0; i<secretWord.length(); i++){
                 if (secretWord.substring(i, i+1).equals(theGuess)) {
-                    thingToReturn += theGuess;
+                    thingToReturn.append(theGuess);
                 } else {
-                    thingToReturn += wordSoFar.substring(i, i+1);
+                    thingToReturn.append(wordSoFar.substring(i, i+1));
                 }
             }
-            return thingToReturn;
-        } else{
-            setImageView();
+            return thingToReturn.toString();
+        } else {
+            addHungPart();
         }
         return wordSoFar;
     }
 
 //    image source: https://stackoverflow.com/questions/13880638/how-do-i-pick-up-the-enter-key-being-pressed-in-javafx2
 //    guesses a letter entered in the text field upon hitting "Enter" key
-    public void onEnter(ActionEvent ae){
-        TextField textfield = (TextField) ae.getSource();
-        String theGuess = textfield.getText().toLowerCase();
-        if (secretWord.contains(theGuess)){
-            textfield.setStyle("-fx-background-color: green");
+    public void onEnter() {
+        String theGuess = guessField.getText().toLowerCase();
+        if (secretWord.contains(theGuess)) {
+            guessField.setStyle("-fx-background-color: green");
         } else {
-            textfield.setStyle("-fx-background-color: red");
+            guessField.setStyle("-fx-background-color: red");
         }
+//        Possible to lose game at this step
         guessedWord.setText(checkGuess(theGuess));
-        textfield.clear();
+        guessField.clear();
 
-//        guessedLetters.getText();
-        guessedLetters.setText(theGuess + guessedLetters.getText());
+        String temp = theGuess + guessedLetters.getText();
+        guessedLetters.setText(sortString(temp));
+        checkWinCondition();
     }
 
     public void resetGame(){
-//    sets to first pic
-        textfield.clear();
+        guessField.clear();
+        secretWordtxtField.clear();
+        //    sets to first pic
         startingPic = 4;
-        String path = new String("/img/" + Integer.toString(startingPic) + ".jpg");
+        String path = "/img/" + Integer.toString(startingPic) + ".jpg";
         Image img1 = new Image(getClass().getResource(path).toExternalForm());
         hangPic.setImage(img1);
-//    resets color of text field
-        textfield.setStyle(null);
-//    removes all valid guessed letters from guessedWord
-        guessedWord.setText(lines());
-//    removes all guessed letters from guessedLetters
+        //    resets color of text field
+        guessField.setStyle(null);
+        //    removes all valid guessed letters from guessedWord
+        guessedWord.setText(dashifySecretWord());
+        //    removes all guessed letters from guessedLetters
         guessedLetters.setText("");
+        guessField.setDisable(false);
         }
 
+    public void enterSecretWord(){
+        String theGuess = secretWordtxtField.getText().toLowerCase();
+        secretWord = theGuess;
+        guessedWord.setText(dashifySecretWord());
+        guessField.clear();
+        resetGame();
+    }
 
-    //    //TODO: Changes button color to red if guess is wrong, green if it is correct (Option 2)
-//    public void guess(ActionEvent actionEvent) {
-//        Button theButtonPressed = (Button) actionEvent.getSource();
-//        String theGuess = theButtonPressed.getText().toLowerCase();
-//        theButtonPressed.setDisable(true);
-//        if (secretWord.contains(theGuess)){
-//            theButtonPressed.setStyle("-fx-background-color: green");
-//        } else {
-//            theButtonPressed.setStyle("-fx-background-color: red");
-//        }
-//        guessedWord.setText(checkGuess(theGuess));
-//    }
+//    Borrowed from: https://www.geeksforgeeks.org/sort-a-string-in-java-2-different-ways/
+    // Method to sort a string alphabetically
+    public static String sortString(String inputString) {
+        // convert input string to char array
+        char tempArray[] = inputString.toCharArray();
+        // sort tempArray
+        Arrays.sort(tempArray);
+        // return new sorted string
+        return new String(tempArray);
+    }
 
-
-//    https://stackoverflow.com/questions/32806068/how-to-change-fxml-lable-text-by-id
-//    thanks to the top answer
+    public void checkWinCondition() {
+        if(secretWord.equals(guessedWord.getText())){
+            String pathWin = "/img/youwin.jpg";
+            Image gameOver = new Image(getClass().getResource(pathWin).toExternalForm());
+            hangPic.setImage(gameOver);
+            guessField.setDisable(true);
+        }
+    }
     @FXML
     private void initialize() {
-        guessedWord.setText(lines());
+        guessedWord.setText(dashifySecretWord());
 
         Image img1 = new Image(getClass().getResource("/img/4.jpg").toExternalForm());
         hangPic.setImage(img1);

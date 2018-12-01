@@ -8,10 +8,12 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" gridLinesVisible="true" hgap="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400" prefWidth="300.0" stylesheets="/sample/sample.css" vgap="9.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane alignment="center" gridLinesVisible="true" hgap="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500" prefWidth="300.0" stylesheets="/sample/sample.css" vgap="9.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <columnConstraints>
-      <ColumnConstraints maxWidth="194.0" minWidth="11.0" prefWidth="134.0" />
+      <ColumnConstraints maxWidth="250.0" minWidth="11.0" prefWidth="220.0" />
       <!--<ColumnConstraints maxWidth="158.0" minWidth="19.0" prefWidth="35.0" />-->
       <!--<ColumnConstraints />-->
       <!--<ColumnConstraints />-->
@@ -20,27 +22,38 @@
       <!--<ColumnConstraints maxWidth="15.0" minWidth="0.0" prefWidth="0.0" />-->
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints maxHeight="350.0" minHeight="153.0" prefHeight="153.0" />
-      <RowConstraints maxHeight="122.0" minHeight="7.0" prefHeight="31.0" />
-      <RowConstraints maxHeight="116.0" minHeight="29.0" prefHeight="30.0" />
-      <RowConstraints maxHeight="105.0" minHeight="34.0" prefHeight="49.0" />
-      <RowConstraints maxHeight="71.0" minHeight="6.0" prefHeight="71.0" />
-      <!--<RowConstraints />-->
-      <!--<RowConstraints />-->
+      <RowConstraints maxHeight="350.0" minHeight="145.0" prefHeight="154.0" />
+      <RowConstraints maxHeight="130.0" minHeight="7.0" prefHeight="63.0" />
+      <RowConstraints maxHeight="121.0" minHeight="29.0" prefHeight="51.0" />
+      <RowConstraints maxHeight="123.0" minHeight="30.0" prefHeight="35.0" />
+      <RowConstraints maxHeight="124.0" minHeight="6.0" prefHeight="50.0" />
+      <RowConstraints maxHeight="81.0" minHeight="6.0" prefHeight="44.0" />
+      <RowConstraints maxHeight="44.0" minHeight="7.0" prefHeight="37.0" />
    </rowConstraints>
    <children>
        <!--inputting images for displaying player progress-->
-      <ImageView fx:id="hangPic" fitHeight="150.0" fitWidth="132.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <FlowPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="134.0" GridPane.rowIndex="1">
+      <ImageView fx:id="hangPic" fitHeight="150.0" fitWidth="132.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <FlowPane alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="221.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
          <children>
-            <Label fx:id="guessedWord" alignment="TOP_CENTER" prefHeight="17.0" prefWidth="134.0" text="_____________" textOverrun="CLIP" />
+            <Label fx:id="guessedWord" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="61.0" prefWidth="222.0" text="_____________" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
          </children>
       </FlowPane>
        <!--add buttons for the letters-->
       <!--<Button fx:id="a" mnemonicParsing="false" onAction="#guess" prefWidth="31" text="A" GridPane.columnIndex="2" GridPane.rowIndex="1" />-->
-      <TextField fx:id="textfield" onAction="#onEnter" prefWidth="196.0" GridPane.rowIndex="2" />
-      <Button fx:id="reset" mnemonicParsing="false" onAction="#resetGame" text="Reset Game" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-      <Label fx:id="guessedLetters" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <TextField fx:id="guessField" alignment="CENTER" onAction="#onEnter" prefWidth="196.0" promptText="Guess a letter!" GridPane.columnIndex="0" GridPane.rowIndex="2">
+         <font>
+            <Font name="Impact" size="22.0" />
+         </font></TextField>
+      <Button fx:id="reset" mnemonicParsing="false" onAction="#resetGame" prefHeight="26.0" prefWidth="163.0" text="Reset Game" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+      <Label fx:id="guessedLetters" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <TextField fx:id="secretWordtxtField" alignment="CENTER" onAction="#enterSecretWord" promptText="Enter Secret Word" GridPane.columnIndex="0" GridPane.rowIndex="5">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></TextField>
+      <Label alignment="CENTER" prefHeight="19.0" prefWidth="219.0" text="Guessed Letters:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+         <font>
+            <Font name="Comic Sans MS" size="13.0" />
+         </font></Label>
 
    </children>
 </GridPane>
