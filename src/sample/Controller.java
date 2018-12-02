@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 
 import javax.xml.soap.Text;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class Controller {
 
@@ -26,35 +27,38 @@ public class Controller {
     private Label guessedLetters;
     @FXML
     private TextField secretWordtxtField;
+    @FXML
+    private Label guessInputResponse;
 
     // these are used for images
     public ImageView hangPic = new ImageView();
-    public Integer startingPic = 4;
+    private Integer startingPic = 1;
 
     //  Cycles through hangman images when wrong letter is added
-    public void addHungPart() {
+    private void addHungPart() {
         startingPic++;
-        if (startingPic > 10) {
-            String pathLose = "/img/game-over-reminder-1432947_1920.png";
+        if (startingPic > 7) {
+            String pathLose = "/jermimg/jerma lose.jpg";
             Image gameOver = new Image(getClass().getResource(pathLose).toExternalForm());
 //            https://i.ebayimg.com/images/g/w~YAAOSw8HBZHJUZ/s-l300.jpg (source of image)
             hangPic.setImage(gameOver);
             guessField.setDisable(true);
+            guessField.setPromptText("LIFE IS PAIN!");
         }
         else {
 //            https://www.oligalma.com/en/downloads/images/hangman (hangman image set)
-            String path = "/img/" + Integer.toString(startingPic) + ".jpg";
+            String path = "/jermimg/jerma" + Integer.toString(startingPic) + ".jpg";
             Image img1 = new Image(getClass().getResource(path).toExternalForm());
             hangPic.setImage(img1);
         }
     }
 
 //    Converts secretWord to dashes
-    public String dashifySecretWord() {
+    private String dashifySecretWord() {
         StringBuilder dashedSecretWord = new StringBuilder();
         for (int i = 0; i<secretWord.length(); i++){
             if(secretWord.substring(i,i+1).equals(" ")) {
-                dashedSecretWord.append(" ");
+                dashedSecretWord.append("  ");
             } else {
                 dashedSecretWord.append("_");}
         }
@@ -62,7 +66,7 @@ public class Controller {
     }
 
 //    Checks guessed letter against secret word, letter for letter.
-    public String checkGuess(String theGuess){
+    private String checkGuess(String theGuess){
         String wordSoFar = guessedWord.getText();
         StringBuilder thingToReturn = new StringBuilder();
         if (secretWord.contains(theGuess)) {
@@ -84,28 +88,42 @@ public class Controller {
 //    guesses a letter entered in the text field upon hitting "Enter" key
     public void onEnter() {
         String theGuess = guessField.getText().toLowerCase();
-        if (secretWord.contains(theGuess)) {
-            guessField.setStyle("-fx-background-color: green");
+        if(theGuess.length() > 1){
+            guessInputResponse.setText("One letter at a time!");
+            guessField.clear();
+            guessField.setStyle(null);
         } else {
-            guessField.setStyle("-fx-background-color: red");
-        }
-//        Possible to lose game at this step
-        guessedWord.setText(checkGuess(theGuess));
-        guessField.clear();
+            if (secretWord.contains(theGuess)) {
+                guessField.setStyle("-fx-background-color: green");
+                guessInputResponse.setText("Good guess!");
+            } else {
+                guessField.setStyle("-fx-background-color: red");
+                guessInputResponse.setText("Try something else.");
+            }
+//        Possible to trigger a loss at this step
+            if (guessedLetters.getText().toLowerCase().contains(theGuess)){
+                guessInputResponse.setText("Already guessed that.");
+                guessField.clear();
+            } else {
+                guessedWord.setText(checkGuess(theGuess));
+                guessField.clear();
 
-        String temp = theGuess + guessedLetters.getText();
-        guessedLetters.setText(sortString(temp));
-        checkWinCondition();
+                String temp = theGuess + guessedLetters.getText();
+                guessedLetters.setText(sortString(temp).toUpperCase());
+                checkWinCondition();
+            }
+        }
     }
 
     public void resetGame(){
         guessField.clear();
         secretWordtxtField.clear();
         //    sets to first pic
-        startingPic = 4;
-        String path = "/img/" + Integer.toString(startingPic) + ".jpg";
+        startingPic = 1;
+        String path = "/jermimg/jerma1.jpg";
         Image img1 = new Image(getClass().getResource(path).toExternalForm());
         hangPic.setImage(img1);
+        guessInputResponse.setText("");
         //    resets color of text field
         guessField.setStyle(null);
         //    removes all valid guessed letters from guessedWord
@@ -113,7 +131,7 @@ public class Controller {
         //    removes all guessed letters from guessedLetters
         guessedLetters.setText("");
         guessField.setDisable(false);
-        }
+    }
 
     public void enterSecretWord(){
         String theGuess = secretWordtxtField.getText().toLowerCase();
@@ -125,7 +143,7 @@ public class Controller {
 
 //    Borrowed from: https://www.geeksforgeeks.org/sort-a-string-in-java-2-different-ways/
     // Method to sort a string alphabetically
-    public static String sortString(String inputString) {
+    private static String sortString(String inputString) {
         // convert input string to char array
         char tempArray[] = inputString.toCharArray();
         // sort tempArray
@@ -134,19 +152,20 @@ public class Controller {
         return new String(tempArray);
     }
 
-    public void checkWinCondition() {
+    private void checkWinCondition() {
         if(secretWord.equals(guessedWord.getText())){
-            String pathWin = "/img/youwin.jpg";
+            String pathWin = "/jermimg/jerma win.jpg";
             Image gameOver = new Image(getClass().getResource(pathWin).toExternalForm());
             hangPic.setImage(gameOver);
             guessField.setDisable(true);
         }
     }
+
     @FXML
     private void initialize() {
         guessedWord.setText(dashifySecretWord());
 
-        Image img1 = new Image(getClass().getResource("/img/4.jpg").toExternalForm());
+        Image img1 = new Image(getClass().getResource("/jermimg/jerma1.jpg").toExternalForm());
         hangPic.setImage(img1);
     }
 

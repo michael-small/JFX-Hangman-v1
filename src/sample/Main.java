@@ -20,9 +20,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Jerma Hangman v1");
+        primaryStage.getIcons().add(new Image("jermimg/jerma7.jpg"));
 
-        primaryStage.setScene(new Scene(root, 750, 750));
+        primaryStage.setScene(new Scene(root, 500, 390));
         primaryStage.show();
     }
 
