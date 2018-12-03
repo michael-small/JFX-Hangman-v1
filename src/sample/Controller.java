@@ -1,19 +1,13 @@
 package sample;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import javax.xml.soap.Text;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 public class Controller {
 
@@ -57,10 +51,11 @@ public class Controller {
     private String dashifySecretWord() {
         StringBuilder dashedSecretWord = new StringBuilder();
         for (int i = 0; i<secretWord.length(); i++){
-            if(secretWord.substring(i,i+1).equals(" ")) {
-                dashedSecretWord.append("  ");
+            if (secretWord.substring(i,i+1).equals(" ")) {
+                dashedSecretWord.append(" ");
             } else {
-                dashedSecretWord.append("_");}
+                dashedSecretWord.append("_");
+            }
         }
         return dashedSecretWord.toString();
     }
@@ -116,32 +111,31 @@ public class Controller {
     }
 
     public void resetGame(){
-        guessField.clear();
-        secretWordtxtField.clear();
-        //    sets to first pic
+//        resets pic to start
         startingPic = 1;
         String path = "/jermimg/jerma1.jpg";
         Image img1 = new Image(getClass().getResource(path).toExternalForm());
         hangPic.setImage(img1);
-        guessInputResponse.setText("");
-        //    resets color of text field
-        guessField.setStyle(null);
-        //    removes all valid guessed letters from guessedWord
-        guessedWord.setText(dashifySecretWord());
-        //    removes all guessed letters from guessedLetters
+//        clears text and styles from all text fields and labels
+        secretWordtxtField.clear();
         guessedLetters.setText("");
+        guessInputResponse.setText("");
+        guessField.clear();
+        guessField.setStyle(null);
         guessField.setDisable(false);
+        guessField.setPromptText("Guess a letter!");
+        guessedWord.setText(dashifySecretWord());
     }
 
+//    enter new word to try from a text field
     public void enterSecretWord(){
-        String theGuess = secretWordtxtField.getText().toLowerCase();
-        secretWord = theGuess;
+        secretWord = secretWordtxtField.getText().toLowerCase();
         guessedWord.setText(dashifySecretWord());
         guessField.clear();
         resetGame();
     }
 
-//    Borrowed from: https://www.geeksforgeeks.org/sort-a-string-in-java-2-different-ways/
+    // Borrowed from: https://www.geeksforgeeks.org/sort-a-string-in-java-2-different-ways/
     // Method to sort a string alphabetically
     private static String sortString(String inputString) {
         // convert input string to char array
@@ -152,6 +146,7 @@ public class Controller {
         return new String(tempArray);
     }
 
+//    checks win, displays win
     private void checkWinCondition() {
         if(secretWord.equals(guessedWord.getText())){
             String pathWin = "/jermimg/jerma win.jpg";
