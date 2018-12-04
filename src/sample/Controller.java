@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.application.Application;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 
 import javafx.fxml.FXML;
@@ -38,6 +40,7 @@ public class Controller {
             hangPic.setImage(gameOver);
             guessField.setDisable(true);
             guessField.setPromptText("LIFE IS PAIN!");
+            guessInputResponse.setText("IT'S OVAH!");
         }
         else {
 //            https://www.oligalma.com/en/downloads/images/hangman (hangman image set)
@@ -90,10 +93,11 @@ public class Controller {
         } else {
             if (secretWord.contains(theGuess)) {
                 guessField.setStyle("-fx-background-color: green");
-                guessInputResponse.setText("Good guess!");
+                guessInputResponse.setText("+2");
             } else {
                 guessField.setStyle("-fx-background-color: red");
-                guessInputResponse.setText("Try something else.");
+                guessInputResponse.setText("-2");
+//                alt responses: "You missed that one! Try another"
             }
 //        Possible to trigger a loss at this step
             if (guessedLetters.getText().toLowerCase().contains(theGuess)){
@@ -153,6 +157,8 @@ public class Controller {
             Image gameOver = new Image(getClass().getResource(pathWin).toExternalForm());
             hangPic.setImage(gameOver);
             guessField.setDisable(true);
+            guessInputResponse.setText("Loot Get!");
+//          TODO:  winQuote();
         }
     }
 
