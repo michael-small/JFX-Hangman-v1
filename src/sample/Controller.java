@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 
@@ -10,11 +11,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Controller {
 
 //    TODO: delete this varible once debugging/testing is done. Rely on enterSecretWord functionality in full game.
-    public String secretWord = "wwwwwww";
+    public String secretWord = "Jordan";
     @FXML
     private TextField guessField;
     @FXML
@@ -25,6 +27,9 @@ public class Controller {
     private TextField secretWordtxtField;
     @FXML
     private Label guessInputResponse;
+
+//    TODO: Implement permanent container of references
+    private String[] references = {"coffee", "cheetos", "chicken", "stream sux", "died to pinwheel"};
 
     // these are used for images
     public ImageView hangPic = new ImageView();
@@ -67,10 +72,10 @@ public class Controller {
     private String checkGuess(String theGuess){
         String wordSoFar = guessedWord.getText();
         StringBuilder thingToReturn = new StringBuilder();
-        if (secretWord.contains(theGuess)) {
+        if (secretWord.toLowerCase().contains(theGuess)) {
             for (int i = 0; i<secretWord.length(); i++){
-                if (secretWord.substring(i, i+1).equals(theGuess)) {
-                    thingToReturn.append(theGuess);
+                if (secretWord.substring(i, i+1).toLowerCase().equals(theGuess)) {
+                    thingToReturn.append(secretWord.substring(i,i+1));
                 } else {
                     thingToReturn.append(wordSoFar.substring(i, i+1));
                 }
@@ -79,6 +84,7 @@ public class Controller {
         } else {
             addHungPart();
         }
+//        if word isn't updated by a right guess, wordSoFar is returned, keeping word the same
         return wordSoFar;
     }
 
@@ -91,7 +97,7 @@ public class Controller {
             guessField.clear();
             guessField.setStyle(null);
         } else {
-            if (secretWord.contains(theGuess)) {
+            if (secretWord.toLowerCase().contains(theGuess)) {
                 guessField.setStyle("-fx-background-color: green");
                 guessInputResponse.setText("+2");
             } else {
@@ -114,6 +120,15 @@ public class Controller {
         }
     }
 
+    public void randomReference() {
+        resetGame();
+//        Luchian Grigore @ https://stackoverflow.com/questions/8065532/how-to-randomly-pick-an-element-from-an-array/8065570#8065570
+        Random generator = new Random();
+        int randomIndex = generator.nextInt(references.length);
+        secretWord = references[randomIndex];
+        guessedWord.setText(dashifySecretWord());
+    }
+
     public void resetGame(){
 //        resets pic to start
         startingPic = 1;
@@ -133,7 +148,7 @@ public class Controller {
 
 //    enter new word to try from a text field
     public void enterSecretWord(){
-        secretWord = secretWordtxtField.getText().toLowerCase();
+        secretWord = secretWordtxtField.getText();
         guessedWord.setText(dashifySecretWord());
         guessField.clear();
         resetGame();
@@ -152,7 +167,7 @@ public class Controller {
 
 //    checks win, displays win
     private void checkWinCondition() {
-        if(secretWord.equals(guessedWord.getText())){
+        if(secretWord.toLowerCase().equals(guessedWord.getText().toLowerCase())){
             String pathWin = "/jermimg/jerma win.jpg";
             Image gameOver = new Image(getClass().getResource(pathWin).toExternalForm());
             hangPic.setImage(gameOver);

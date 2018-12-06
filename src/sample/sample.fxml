@@ -26,7 +26,7 @@
       <RowConstraints maxHeight="350.0" minHeight="145.0" prefHeight="201.0" />
       <RowConstraints maxHeight="130.0" minHeight="7.0" prefHeight="104.0" />
       <RowConstraints maxHeight="121.0" minHeight="21.0" prefHeight="29.0" />
-      <!--<RowConstraints maxHeight="123.0" minHeight="27.0" prefHeight="40.0" />-->
+      <RowConstraints maxHeight="123.0" minHeight="27.0" prefHeight="40.0" />
       <!--<RowConstraints maxHeight="124.0" minHeight="6.0" prefHeight="31.0" />-->
       <!--<RowConstraints maxHeight="81.0" minHeight="6.0" prefHeight="53.0" />-->
       <!--<RowConstraints maxHeight="85.0" minHeight="7.0" prefHeight="37.0" />-->
@@ -83,6 +83,7 @@
             <Insets top="80.0" />
          </GridPane.margin>
       </Hyperlink>
+      <Button mnemonicParsing="false" onAction="#randomReference" prefHeight="25.0" prefWidth="225.0" text="New Reference" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3" />
 
    </children>
 </GridPane>
