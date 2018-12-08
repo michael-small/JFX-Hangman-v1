@@ -20,7 +20,7 @@ import java.util.Random;
 public class Controller {
 
 //    TODO: delete this variable once debugging/testing is done. Rely on enterSecretWord functionality in full game.
-    private String secretWord = "Jordan";
+    private String secretWord = "SOLVIET";
     @FXML
     private TextField guessField;
     @FXML
@@ -45,7 +45,7 @@ public class Controller {
             {"I beat Dark Souls 3 on stream","https://www.youtube.com/watch?v=Vk0-kiRexMU&feature=youtu.be&t=4m46s"},
             {"This dude is fucked","https://www.youtube.com/watch?v=fCQi0W9DOaM&feature=youtu.be&t=39s"},
             {"We pray at night, we stalk at night","https://www.youtube.com/watch?v=jAXioRNYy4s"},
-            {"Ladies and gentlemen of the jury many I please have the attention of the class?","https://youtu.be/jAXioRNYy4s?t=87"},
+            {"Ladies and gentlemen of the jury may I please have the attention of the class?","https://youtu.be/jAXioRNYy4s?t=87"},
             {"You're running over a guy right now","https://youtu.be/jAXioRNYy4s?t=62"}
     };
 
@@ -59,14 +59,12 @@ public class Controller {
         if (startingPic > 7) {
             String pathLose = "/jermimg/jerma lose.jpg";
             Image gameOver = new Image(getClass().getResource(pathLose).toExternalForm());
-//            https://i.ebayimg.com/images/g/w~YAAOSw8HBZHJUZ/s-l300.jpg (source of image)
             hangPic.setImage(gameOver);
             guessField.setDisable(true);
             guessField.setPromptText("LIFE IS PAIN!");
             guessInputResponse.setText("IT'S OVAH!");
         }
         else {
-//            https://www.oligalma.com/en/downloads/images/hangman (hangman image set)
             String path = "/jermimg/jerma" + Integer.toString(startingPic) + ".jpg";
             Image img1 = new Image(getClass().getResource(path).toExternalForm());
             hangPic.setImage(img1);
@@ -79,6 +77,8 @@ public class Controller {
         for (int i = 0; i<secretWord.length(); i++){
             if (secretWord.substring(i,i+1).equals(" ")) {
                 dashedSecretWord.append(" ");
+            } else if (secretWord.substring(i, i+1).matches("[\\d\\W]")){ //fills in numbers/non-word chars for user
+                dashedSecretWord.append(secretWord.substring(i, i+1));
             } else {
                 dashedSecretWord.append("_");
             }
@@ -110,8 +110,12 @@ public class Controller {
 //    guesses a letter entered in the text field upon hitting "Enter" key
     public void onEnter(){
         String theGuess = guessField.getText().toLowerCase();
-        if(theGuess.length() > 1){
+        if(theGuess.length() > 1) {
             guessInputResponse.setText("One letter at a time!");
+            guessField.clear();
+            guessField.setStyle(null);
+        } else if (theGuess.matches("[\\d\\W]")) {
+            guessInputResponse.setText("Only guess letters!");
             guessField.clear();
             guessField.setStyle(null);
         } else {
@@ -156,7 +160,9 @@ public class Controller {
         Image img1 = new Image(getClass().getResource(path).toExternalForm());
         hangPic.setImage(img1);
 //        clears text and styles from all text fields and labels
-        secretWordtxtField.clear();
+
+//        id: secretWordtxtField call, reimplement
+//        secretWordtxtField.clear();
         guessedLetters.setText("");
         guessInputResponse.setText("");
         guessField.clear();

@@ -19,7 +19,7 @@ public class Main extends Application {
         primaryStage.setTitle("Jerma Hangman v1");
         primaryStage.getIcons().add(new Image("jermimg/jerma7.jpg"));
 
-        primaryStage.setScene(new Scene(root, 500, 390));
+        primaryStage.setScene(new Scene(root, 450, 450));
         primaryStage.show();
     }
 
