@@ -10,13 +10,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Controller {
 
-//    TODO: delete this varible once debugging/testing is done. Rely on enterSecretWord functionality in full game.
-    public String secretWord = "Jordan";
+//    TODO: delete this variable once debugging/testing is done. Rely on enterSecretWord functionality in full game.
+    private String secretWord = "Jordan";
     @FXML
     private TextField guessField;
     @FXML
@@ -28,8 +32,22 @@ public class Controller {
     @FXML
     private Label guessInputResponse;
 
+    private String referenceURL = "";
+
 //    TODO: Implement permanent container of references
-    private String[] references = {"coffee", "cheetos", "chicken", "stream sux", "died to pinwheel"};
+    private String[][] references = {
+            {"coffee cheetos chicken", "https://www.youtube.com/watch?v=6x7ezLiR4rY&feature=youtu.be"},
+            {"wot about der legs", "https://www.youtube.com/watch?v=SvYAPV4FEaQ&feature=youtu.be"},
+            {"Somebody clip this", "https://www.youtube.com/watch?v=fw-M7y4DLko"}, //bad reference
+            {"Is it like a currency thing?","https://www.youtube.com/watch?v=DKplyPPtAJ0&feature=youtu.be&t=4m58s"},
+            {"You missed that one. Try another!","https://www.youtube.com/watch?v=Fv4mR6QpYws&feature=youtu.be&t=138"},
+            {"That's somebody's asshole","https://www.youtube.com/watch?v=8_xW-SqyJAU"},
+            {"I beat Dark Souls 3 on stream","https://www.youtube.com/watch?v=Vk0-kiRexMU&feature=youtu.be&t=4m46s"},
+            {"This dude is fucked","https://www.youtube.com/watch?v=fCQi0W9DOaM&feature=youtu.be&t=39s"},
+            {"We pray at night, we stalk at night","https://www.youtube.com/watch?v=jAXioRNYy4s"},
+            {"Ladies and gentlemen of the jury many I please have the attention of the class?","https://youtu.be/jAXioRNYy4s?t=87"},
+            {"You're running over a guy right now","https://youtu.be/jAXioRNYy4s?t=62"}
+    };
 
     // these are used for images
     public ImageView hangPic = new ImageView();
@@ -90,7 +108,7 @@ public class Controller {
 
 //    image source: https://stackoverflow.com/questions/13880638/how-do-i-pick-up-the-enter-key-being-pressed-in-javafx2
 //    guesses a letter entered in the text field upon hitting "Enter" key
-    public void onEnter() {
+    public void onEnter(){
         String theGuess = guessField.getText().toLowerCase();
         if(theGuess.length() > 1){
             guessInputResponse.setText("One letter at a time!");
@@ -118,6 +136,7 @@ public class Controller {
                 checkWinCondition();
             }
         }
+
     }
 
     public void randomReference() {
@@ -125,8 +144,9 @@ public class Controller {
 //        Luchian Grigore @ https://stackoverflow.com/questions/8065532/how-to-randomly-pick-an-element-from-an-array/8065570#8065570
         Random generator = new Random();
         int randomIndex = generator.nextInt(references.length);
-        secretWord = references[randomIndex];
+        secretWord = references[randomIndex][0];
         guessedWord.setText(dashifySecretWord());
+        referenceURL = references[randomIndex][1];
     }
 
     public void resetGame(){
@@ -175,6 +195,11 @@ public class Controller {
             guessInputResponse.setText("Loot Get!");
 //          TODO:  winQuote();
         }
+    }
+
+    public void linkToReference() throws URISyntaxException, IOException {
+        Desktop d = Desktop.getDesktop();
+        d.browse(new URI(referenceURL));
     }
 
     @FXML
