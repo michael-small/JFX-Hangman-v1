@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 import java.awt.*;
 import java.io.IOException;
@@ -32,7 +34,7 @@ public class Controller {
     @FXML
     private Label guessInputResponse;
 
-    private String referenceURL = "";
+    private String referenceURL = "https://www.youtube.com/channel/UCL7DDQWP6x7wy0O6L5ZIgxg";
 
 //    TODO: Implement permanent container of references
     private String[][] references = {
@@ -89,16 +91,16 @@ public class Controller {
 //    Checks guessed letter against secret word, letter for letter.
     private String checkGuess(String theGuess){
         String wordSoFar = guessedWord.getText();
-        StringBuilder thingToReturn = new StringBuilder();
+        StringBuilder dashifiedGuess = new StringBuilder();
         if (secretWord.toLowerCase().contains(theGuess)) {
             for (int i = 0; i<secretWord.length(); i++){
                 if (secretWord.substring(i, i+1).toLowerCase().equals(theGuess)) {
-                    thingToReturn.append(secretWord.substring(i,i+1));
+                    dashifiedGuess.append(secretWord.substring(i,i+1));
                 } else {
-                    thingToReturn.append(wordSoFar.substring(i, i+1));
+                    dashifiedGuess.append(wordSoFar.substring(i, i+1));
                 }
             }
-            return thingToReturn.toString();
+            return dashifiedGuess.toString();
         } else {
             addHungPart();
         }
@@ -195,11 +197,10 @@ public class Controller {
     private void checkWinCondition() {
         if(secretWord.toLowerCase().equals(guessedWord.getText().toLowerCase())){
             String pathWin = "/jermimg/jerma win.jpg";
-            Image gameOver = new Image(getClass().getResource(pathWin).toExternalForm());
-            hangPic.setImage(gameOver);
+            Image gameWonImg = new Image(getClass().getResource(pathWin).toExternalForm());
+            hangPic.setImage(gameWonImg);
             guessField.setDisable(true);
             guessInputResponse.setText("Loot Get!");
-//          TODO:  winQuote();
         }
     }
 
