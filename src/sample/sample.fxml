@@ -80,7 +80,7 @@
          <GridPane.margin>
             <Insets bottom="10.0" />
          </GridPane.margin></Label>
-      <Hyperlink alignment="CENTER" onAction="#linkToReference" prefHeight="24.0" prefWidth="178.0" text="Link to Reference" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
+      <Hyperlink fx:id="referenceHyperLink" alignment="CENTER" onAction="#linkToReference" prefHeight="24.0" prefWidth="178.0" text="Link to Reference" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
          <GridPane.margin>
             <Insets top="80.0" />
          </GridPane.margin>

@@ -33,6 +33,8 @@ public class Controller {
     private TextField secretWordtxtField;
     @FXML
     private Label guessInputResponse;
+    @FXML
+    private Hyperlink referenceHyperLink;
 
     private String referenceURL = "https://www.youtube.com/channel/UCL7DDQWP6x7wy0O6L5ZIgxg";
 
@@ -201,6 +203,7 @@ public class Controller {
             hangPic.setImage(gameWonImg);
             guessField.setDisable(true);
             guessInputResponse.setText("Loot Get!");
+            referenceHyperLink.setVisible(true);
         }
     }
 
@@ -211,6 +214,7 @@ public class Controller {
 
     @FXML
     private void initialize() {
+        referenceHyperLink.setVisible(false);
         guessedWord.setText(dashifySecretWord());
 
         Image img1 = new Image(getClass().getResource("/jermimg/jerma1.jpg").toExternalForm());
