@@ -1,6 +1,8 @@
 package sample;
 
-import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -10,9 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.awt.*;
+import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,6 +38,8 @@ public class Controller {
     private Label guessInputResponse;
     @FXML
     private Hyperlink referenceHyperLink;
+    @FXML
+    private Button otherScene;
 
     private String referenceURL = "https://www.youtube.com/channel/UCL7DDQWP6x7wy0O6L5ZIgxg";
 
@@ -52,6 +57,22 @@ public class Controller {
             {"Ladies and gentlemen of the jury may I please have the attention of the class?","https://youtu.be/jAXioRNYy4s?t=87"},
             {"You're running over a guy right now","https://youtu.be/jAXioRNYy4s?t=62"}
     };
+
+    /**
+     * Scene change
+     * Via https://www.youtube.com/watch?v=XCgcQTQCfJQ (Jaret Wright)
+     */
+    public void returnToMainMenu(ActionEvent event) throws IOException
+    {
+        Parent loginMenu = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        Scene loginMenuScene = new Scene(loginMenu);
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        window.setScene(loginMenuScene);
+        window.show();
+    }
 
     // these are used for images
     public ImageView hangPic = new ImageView();
