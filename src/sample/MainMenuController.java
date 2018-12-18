@@ -30,7 +30,7 @@ public class MainMenuController {
 
     @FXML
     private void initialize() {
-        Image img1 = new Image(getClass().getResource("/jermimg/jermamenu.jpg").toExternalForm());
+        Image img1 = new Image(getClass().getResource("/jermimg/jermamenu.png").toExternalForm());
         menuPic.setImage(img1);
     }
 }

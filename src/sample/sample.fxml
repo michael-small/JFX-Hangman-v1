@@ -86,7 +86,10 @@
          </GridPane.margin>
       </Hyperlink>
       <Button mnemonicParsing="false" onAction="#randomReference" prefHeight="25.0" prefWidth="225.0" text="New Reference" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" />
-      <Button fx:id="otherScene" mnemonicParsing="false" onAction="#returnToMainMenu" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button fx:id="otherScene" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToMainMenu" prefHeight="25.0" prefWidth="177.0" text="Main Menu" GridPane.columnIndex="1">
+         <GridPane.margin>
+            <Insets top="150.0" />
+         </GridPane.margin></Button>
 
    </children>
 </GridPane>
