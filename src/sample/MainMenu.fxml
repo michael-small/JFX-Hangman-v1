@@ -8,9 +8,10 @@
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainMenuController">
    <children>
       <ImageView fx:id="menuPic" fitHeight="600.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
-      <Button mnemonicParsing="false" onAction="#goToHangman" prefHeight="68.0" prefWidth="142.0" text="Start Game" translateX="-100.0" wrapText="true">
+      <Button mnemonicParsing="false" onAction="#goToHangman" prefHeight="66.0" prefWidth="138.0" text="Start Game" translateX="-100.0" translateY="-50.0" wrapText="true">
          <font>
             <Font size="20.0" />
          </font></Button>
+      <Button fx:id="optionsButton" mnemonicParsing="false" onAction="#goToOptions" prefHeight="44.0" prefWidth="92.0" text="Options" translateX="-100.0" translateY="25.0" />
    </children>
 </StackPane>

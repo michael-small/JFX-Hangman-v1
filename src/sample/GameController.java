@@ -22,7 +22,7 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Controller {
+public class GameController {
 
 //    TODO: delete this variable once debugging/testing is done. Rely on enterSecretWord functionality in full game.
     private String secretWord = "SOLVIET";
@@ -173,9 +173,17 @@ public class Controller {
 //        Luchian Grigore @ https://stackoverflow.com/questions/8065532/how-to-randomly-pick-an-element-from-an-array/8065570#8065570
         Random generator = new Random();
         int randomIndex = generator.nextInt(references.length);
+
+//        TODO: Impliment quotes
+//        Quotes randomQuote = new Quotes();
+//        String[][] refs = randomQuote.getJReferences();
+//        secretWord = refs[randomIndex][0];
+//        referenceURL = refs[randomIndex][1];
+//        guessedWord.setText(dashifySecretWord());
         secretWord = references[randomIndex][0];
         guessedWord.setText(dashifySecretWord());
         referenceURL = references[randomIndex][1];
+
     }
 
     public void resetGame(){

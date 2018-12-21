@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -18,13 +17,25 @@ public class MainMenuController {
 
     public void goToHangman(ActionEvent event) throws IOException
     {
-        Parent loginMenu = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent loginMenu = FXMLLoader.load(getClass().getResource("Game.fxml"));
         Scene loginMenuScene = new Scene(loginMenu);
 
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
         window.setScene(loginMenuScene);
+        window.show();
+    }
+
+    public void goToOptions(ActionEvent event) throws IOException
+    {
+        Parent optionsMenu = FXMLLoader.load(getClass().getResource("Options.fxml"));
+        Scene optionsMenuScene = new Scene(optionsMenu);
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        window.setScene(optionsMenuScene);
         window.show();
     }
 
