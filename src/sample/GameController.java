@@ -183,7 +183,6 @@ public class GameController {
         secretWord = references[randomIndex][0];
         guessedWord.setText(dashifySecretWord());
         referenceURL = references[randomIndex][1];
-
     }
 
     public void resetGame(){
